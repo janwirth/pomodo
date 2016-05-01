@@ -14,6 +14,7 @@ html(ng-app="pomodoroApp")
     != css()
     script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js")
   body
+    h1 Pomodo Timer
     .card(ng-class="{work: !break && running, break: break && running, booted: booted}" ng-controller='PomodoroController')
       .countdown {{countDown | clockTime}}
       .controls
@@ -23,3 +24,4 @@ html(ng-app="pomodoroApp")
         button(ng-click="startSession('break')") Break
       // block content
       != js()
+    a(href='https://github.com/franzskuffka').madeBy Created by Jan Wirth
