@@ -10,6 +10,7 @@
     "js-pipeline": "0.2.x",
     "jstransformer-marked": "^1.0.0",
     "marked": "0.3.x",
+    "roots": "^4.1.0",
     "rupture": "0.6.x",
     "stylus": "0.52.x"
   }
