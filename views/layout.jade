@@ -3,25 +3,19 @@ doctype html
 html(ng-app="pomodoroApp")
   head
     link(href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css')
-    title Pomodorski
+    title Pomodo
     meta(charset='utf8')
     meta(http-equiv='X-UA-Compatible', content='IE=edge, chrome=1')
-    meta(name='description', content='description of your site')
-    meta(name='author', content= "author of the site")
+    meta(name='description', content='Simple pomodoro workflow timer')
+    meta(name='author', content= "Jan Wirth")
+    link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-fork-ribbon-css/0.2.0/gh-fork-ribbon.min.css")
+
+
     //- uncomment if your site is responsive!
-    //- meta(name="viewport" content="width=device-width, initial-scale=1")
+    meta(name="viewport" content="width=device-width, initial-scale=1")
     title= _path
     != css()
     script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js")
   body
-    h1 Pomodo Timer
-    .card(ng-class="{work: !break && running, break: break && running, booted: booted}" ng-controller='PomodoroController')
-      .countdown {{countDown | clockTime}}
-      .controls
-        input(ng-model='workDuration' )
-        input(ng-model='breakDuration')
-        button(ng-click="startSession('work')") Work
-        button(ng-click="startSession('break')") Break
-      // block content
-      != js()
-    a(href='https://github.com/franzskuffka').madeBy Created by Jan Wirth
+    block content
+    != js()

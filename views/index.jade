@@ -1,6 +1,13 @@
 extends layout
 
 block content
-  h3 Welcome to roots!
-  :marked
-    Find tutorials and documentation at http://roots.cx : )
+  <a class="github-fork-ribbon left-bottom fixed" href="https://github.com/FranzSkuffka/pomodo" title="Fork me on GitHub">Fork me on GitHub</a>
+  h1 Pomodo Timer
+
+  .card(ng-class="{work: !break && running, break: break && running, booted: booted}" ng-controller='PomodoroController')
+    .countdown {{countDown | clockTime}}
+    .controls
+      input(ng-model='workDuration' )
+      input(ng-model='breakDuration')
+      button(ng-click="startSession('work')") Work
+      button(ng-click="startSession('break')") Break
