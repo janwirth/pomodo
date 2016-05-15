@@ -1,6 +1,9 @@
 iconLink = "http://www.wpclipart.com/food/fruit/tomato/tomato.png"
+
 app = angular.module 'pomodoroApp', []
+
 app.controller 'PomodoroController',
+
   class PomodoroController
     constructor: ($scope,$interval) ->
       # Ask for notifications
@@ -10,7 +13,7 @@ app.controller 'PomodoroController',
       notify = (message) ->
         new Notification(message, {body: "Pomodorski", icon: iconLink})
       playAlertSound = => @audio.play()
-			
+
       # setup
       $scope.booted = true
       $scope.running = false
@@ -20,8 +23,8 @@ app.controller 'PomodoroController',
       $scope.countDown = $scope.workDuration * 60
       @notificationsEnabled = false
       @audio = new Audio('http://www.fenderrhodes.com/audio/mark1b-stage-1979-mellow.mp3')
-      
-      
+
+
       # converter method
       sessionDurationInSeconds = (type) ->
         if type == 'work'
@@ -31,17 +34,17 @@ app.controller 'PomodoroController',
           duration = $scope.breakDuration
           $scope.break = true
         duration * 60
-      
+
       # countdown method
       count = -> $scope.countDown--
-      
+
       $scope.startSession = (type) =>
         alert('Warning: no notifications') if !@notificationsEnabled
         # stop old timer and set session properties
         $interval.cancel @currentSession if angular.isDefined @currentSession
         $scope.countDown = sessionDurationInSeconds(type)
         @currentSession = $interval count , 1000, $scope.countDown
-        
+
         # when $interval has ended
         @currentSession.then () =>
           newSessionType = if type == 'work' then 'break' else 'work'
@@ -49,7 +52,7 @@ app.controller 'PomodoroController',
           notify('Time for ' + newSessionType)
           @audio.play()
         $scope.running = true
-       
+
 app.filter 'clockTime', ->
   (totalSeconds) ->
     hours = Math.floor(totalSeconds / 3600)
