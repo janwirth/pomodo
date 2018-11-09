@@ -60,4 +60,5 @@ app.filter 'clockTime', ->
     minutes = Math.floor(totalSeconds / 60)
     seconds = totalSeconds % 60
     seconds = "0" + seconds if seconds < 10
-    minutes + ':' + seconds
+    res = minutes + ':' + seconds   
+    document.title = res     
