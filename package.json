@@ -1,0 +1,17 @@
+{
+  "name": "pomodo-2",
+  "version": "0.0.1",
+  "description": "A timer app with todos built-in.",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "build": "elm-app build"
+  },
+  "author": "Jan Wirth<jan@scalab.app>",
+  "license": "MIT",
+  "dependencies": {
+    "create-elm-app": "4.2.8"
+  }
+}

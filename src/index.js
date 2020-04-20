@@ -5,11 +5,11 @@ import * as serviceWorker from './serviceWorker';
 
 
 var storedState = localStorage.getItem('elm-todo-save');
-console.log(storedState)
 var startingState = storedState ? JSON.parse(storedState) : null;
+
 const now = Date.now()
 const flags = {localStorage: startingState, now}
-console.log(flags)
+
 const app =
     Elm.Main.init({ flags
         , node: document.getElementById('root')
