@@ -24,8 +24,8 @@ type alias Model =
     }
 
 
-init : Flags -> ( Model, Cmd Msg )
-init flags =
+init : Flags -> a -> b -> ( Model, Cmd Msg )
+init flags _ _ =
     let
         (timerModel, timerCmd) = Timer.init
         (todoModel, todoCmd) = Todo.init flags.localStorage
@@ -76,11 +76,22 @@ update msg model =
 view : Model -> Html Msg
 view model =
     div []
-        [ Html.text "pomodo"
-        , Timer.view model.timerModel |> Html.map TimerMsg
+        [ Timer.view model.timerModel |> Html.map TimerMsg
         , Todo.view model.todoModel |> Html.map TodoMsg
         ]
 
+viewWithTitle : Model -> Browser.Document Msg
+viewWithTitle model =
+    let
+        title : String
+        title =
+            Timer.getStatusString model.timerModel ++
+            " " ++
+            Timer.timeMaker model.timerModel
+    in
+        { title = title
+        , body = [view model]
+        }
 
 
 ---- PROGRAM ----
@@ -92,10 +103,12 @@ type alias Flags = {
 
 main : Program Flags Model Msg
 main =
-    Browser.element
-        { view = view
+    Browser.application
+        { view = viewWithTitle
         , init = init
         , update = update
+        , onUrlChange = always NoOp
+        , onUrlRequest = always NoOp
         , subscriptions = subscriptions
         }
 

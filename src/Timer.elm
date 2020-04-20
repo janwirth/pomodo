@@ -230,7 +230,7 @@ view model =
     div [ class "appWindow" ]
         [ makeHeader
         , p [ class "counter" ]
-            [ text <| "Routines Completed: " ++ Debug.toString model.pomsCompleted ]
+            [ text <| "Routines Completed: " ++ String.fromInt model.pomsCompleted ]
         , makeMainPage model
         ]
 
@@ -257,7 +257,7 @@ makeClock model =
     div []
         [ div [ bezelChecker model.timerStatus ]
             [ div [ statusChecker model.timerStatus ]
-                [ text <| Debug.toString model.timerStatus
+                [ text <| getStatusString model 
                 ]
             , h1 [ gaugeChecker model.timerStatus ]
                 [ text <| timeMaker model
@@ -267,6 +267,11 @@ makeClock model =
             ]
         ]
 
+getStatusString : Model -> String
+getStatusString {timerStatus} =
+    case timerStatus of
+        Focus -> "Focus"
+        Relax -> "Relax"
 
 timeMaker : Model -> String
 timeMaker model =
@@ -294,11 +299,8 @@ getClockString : Int -> String
 getClockString sec =
     let
         formatter x =
-            if (String.length <| Debug.toString x) == 1 then
-                "0" ++ Debug.toString x
-
-            else
-                Debug.toString x
+                String.fromInt x
+                |> String.padLeft 2 '0'
 
         madeMinutes =
             sec // 60
@@ -342,17 +344,9 @@ gaugeChecker status =
 bezelButtonMaker : String -> Msg -> Model -> Html Msg
 bezelButtonMaker btnName msg model =
     button
-        [ onClick msg, getBezelBtnClass btnName model ]
+        [ onClick msg]
         [ text btnName ]
 
-
-getBezelBtnClass : String -> Model -> Html.Attribute Msg
-getBezelBtnClass btnName model =
-    if btnName == Debug.toString model.timerMode then
-        class "activebezelbtn"
-
-    else
-        class "inactivebezelbtn"
 
 
 makeHeader : Html Msg
@@ -379,7 +373,7 @@ init : ( Model, Cmd Msg )
 init =
     ( { counting = False
       , timerStatus = Focus
-      , timerMode = Elapsed
+      , timerMode = Remaining
       , seconds = 0
       , pomsCompleted = 0
       , chilloutMode = False
