@@ -1,4 +1,4 @@
-module Timer exposing (..)
+port module Timer exposing (..)
 {-| Source: https://github.com/NewMountain/timerApp
 
 Ported with elm-upgrade.
@@ -11,6 +11,7 @@ import Html.Events exposing (onClick)
 import String
 import Time
 
+port notify : String -> Cmd msg
 
 
 -- Model
@@ -131,7 +132,7 @@ update msg model =
                     ( model
                         |> flipStatus
                         |> zeroClock
-                    , Cmd.none
+                    , notify "Time for a break."
                     )
 
                 -- Counting and clock has struck 5 minutes in Relax
@@ -140,7 +141,7 @@ update msg model =
                         |> flipStatus
                         |> zeroClock
                         |> markPomsCompleted
-                    , Cmd.none
+                    , notify "Time for work."
                     )
 
                 -- Exit chilloutMode
@@ -150,7 +151,7 @@ update msg model =
                         |> zeroClock
                         |> markPomsCompleted
                         |> disengageChilloutMode
-                    , Cmd.none
+                    , notify "Time for work."
                     )
 
                 -- Ordinary counting

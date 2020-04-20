@@ -24,3 +24,28 @@ app.ports.setStorage.subscribe(function(state) {
 // Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister();
 
+var notificationsEnabled = false
+Notification.requestPermission((status) => {
+  notify('Notifications enabled');
+  notificationsEnabled = status === "granted";
+});
+
+// Notifications
+const notificationSound = "https://notificationsounds.com/soundfiles/a8849b052492b5106526b2331e526138/file-sounds-1125-insight.mp3"
+
+const audio = new Audio(notificationSound)
+const notify = function(message) {
+  audio.play()
+  // do not try pushing a notification if the user has not yet accepted it.
+  if (!notificationsEnabled) {
+      return
+  }
+  const iconLink = "http://www.wpclipart.com/food/fruit/tomato/tomato.png"
+
+  return new Notification(message, {
+    body: message,
+    icon: iconLink
+  });
+};
+
+app.ports.notify.subscribe(notify);
